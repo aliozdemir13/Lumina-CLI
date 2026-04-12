@@ -56,19 +56,19 @@ Supported: f1, indy, nascar
 # Technical Deep-Dive (Architect's Perspective)
 
 Lumina implements several advanced Go patterns to demonstrate professional engineering standards:
-1. Command-Pattern Architecture
+- Command-Pattern Architecture
 
 Utilized the Cobra CLI library to decouple command logic from data services. This allows for modular development and an extensible subcommand structure.
-2. Data Marshalling & Normalization
+- Data Marshalling & Normalization
 
 Managed enterprise-level API responses by defining precise struct mappings. Used Go's json.NewDecoder for efficient memory usage when parsing large, nested ESPN payloads.
-3. Structured Data Presentation
+- Structured Data Presentation
 
 Integrated go-pretty to render complex datasets (like racing podiums and soccer highlights) into clear, readable terminal tables with custom padding and styling.
-4. Time Logic & Normalization
+- Time Logic & Normalization
 
 Implemented custom time-handling logic to manage the 2006-01-02T15:04Z layout, ensuring that data is presented in the user's local time zone regardless of the event location.
-5. Efficient Memory Management
+- Efficient Memory Management
 
 Utilized pointer slices ([]*Score) to ensure efficient data handling and avoid unnecessary copying during high-frequency CLI interactions.
 
