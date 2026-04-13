@@ -73,12 +73,11 @@ Implemented custom time-handling logic to manage the 2006-01-02T15:04Z layout, e
 Utilized pointer slices ([]*Score) to ensure efficient data handling and avoid unnecessary copying during high-frequency CLI interactions.
 
 # Installation
-code Bash
 
-# Clone the repository
-git clone h[ttps://github.com/aliozdemir13/Lumina-CLI.git](https://github.com/aliozdemir13/Lumina-CLI.git)
+## Clone the repository
+git clone [https://github.com/aliozdemir13/Lumina-CLI.git](https://github.com/aliozdemir13/Lumina-CLI.git)
 
-# Build the binary
+## Build the binary and Run
 ### Linux/MacOS
 ``` bash
 make build
@@ -91,7 +90,4 @@ make run
 .\build.ps1 run
 ```
 
-# Run Lumina
-./lumina --help
-
-    Disclaimer: This project is for educational purposes only. Lumina is not affiliated with, endorsed by, or representative of ESPN. All sports data is sourced from public API endpoints for personal use.
+Disclaimer: This project is for educational purposes only. Lumina is not affiliated with, endorsed by, or representative of ESPN. All sports data is sourced from public API endpoints for personal use.
