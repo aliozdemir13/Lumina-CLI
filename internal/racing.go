@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 )
 
 // for races
@@ -44,7 +45,10 @@ type RacingCompetitor struct {
 }
 
 func (s *Results) FetchResults(endpoint string) ([]Results, error) {
-	resp, err := http.Get(endpoint)
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+	resp, err := client.Get(endpoint)
 	if err != nil {
 		return nil, err
 	}

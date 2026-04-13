@@ -2,6 +2,10 @@
 build:
 	go build -o lumina main.go
 
+# Quality safeguard
+lint:
+    golangci-lint run
+
 # Run all tests
 test:
 	go test -v ./...

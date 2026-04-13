@@ -3,6 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 )
 
 // for NFL, NBA, Champions League and Europa League response parse
@@ -26,7 +27,7 @@ type Highlights struct {
 	Minute string
 }
 
-type EspnResponse struct {
+type ESPNResponse struct {
 	Events []Event `json:"events"`
 }
 
@@ -84,13 +85,16 @@ type Clock struct {
 }
 
 func (s *Score) FetchResults(endpoint string) ([]*Score, error) {
-	resp, err := http.Get(endpoint)
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+	resp, err := client.Get(endpoint)
 	if err != nil { // always check errors before closing the door to avoid panic results
 		return nil, err
 	}
 	defer resp.Body.Close() // ALWAYS close the "door" when you're done
 
-	var wrapper EspnResponse
+	var wrapper ESPNResponse
 	if err := json.NewDecoder(resp.Body).Decode(&wrapper); err != nil {
 		return nil, err
 	}
