@@ -18,7 +18,7 @@ var racingCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1), // Ensures the user types a motorsport name
 	Run: func(cmd *cobra.Command, args []string) {
 		league := args[0] // args[0] is the first word after 'racing'
-		racingService := internal.Results{URL: "https://site.api.espn.com/apis/site/v2/sports"}
+		var racingService internal.Results
 
 		// Map simple names to ESPN slugs
 		mapping := map[string]string{
@@ -37,7 +37,7 @@ var racingCmd = &cobra.Command{
 			year, _, _ := time.Now().Date()
 			yesterday = strconv.Itoa(year) + "0101"
 		}
-		results, err := racingService.FetchResults("/racing/" + slug + "/scoreboard?dates=" + yesterday + "-" + today)
+		results, err := racingService.FetchResults("https://site.api.espn.com/apis/site/v2/sports/racing/" + slug + "/scoreboard?dates=" + yesterday + "-" + today)
 		internal.PrintRacingTable(results, err)
 	},
 }

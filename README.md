@@ -79,7 +79,17 @@ code Bash
 git clone h[ttps://github.com/aliozdemir13/Lumina-CLI.git](https://github.com/aliozdemir13/Lumina-CLI.git)
 
 # Build the binary
-go build -o lumina main.go
+### Linux/MacOS
+``` bash
+make build
+make run
+```
+
+### Windows
+```bash
+.\build.ps1 build
+.\build.ps1 run
+```
 
 # Run Lumina
 ./lumina --help

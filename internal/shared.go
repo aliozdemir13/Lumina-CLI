@@ -1,6 +1,8 @@
 package internal
 
-import "time"
+import (
+	"time"
+)
 
 func FormatToLocal(isoString string) (string, error) {
 	const layout = "2006-01-02T15:04Z"

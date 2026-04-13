@@ -2,13 +2,13 @@ package internal
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
 )
 
 // for races
 type Results struct {
-	URL             string
 	Podium          string // sample: LEC - HAM - VER
 	Location        string // sample: Qatar Airways Australian GP
 	SessionType     string // FP1 | SQ | SR | Quali | Race
@@ -43,8 +43,8 @@ type RacingCompetitor struct {
 	} `json:"athlete"`
 }
 
-func (s *Results) FetchResults(path string) ([]Results, error) {
-	resp, err := http.Get(s.URL + path)
+func (s *Results) FetchResults(endpoint string) ([]Results, error) {
+	resp, err := http.Get(endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,10 @@ func (s *Results) FetchResults(path string) ([]Results, error) {
 				SessionComplete: session.Status.Type.Completed,
 			}
 
-			res.SessionDate, _ = FormatToLocal(session.Date)
+			res.SessionDate, err = FormatToLocal(session.Date)
+			if err != nil {
+				fmt.Printf(`Error: %s`, err)
+			}
 
 			// Build the "LEC - HAM - VER" string from competitors
 			var podiumNames []string

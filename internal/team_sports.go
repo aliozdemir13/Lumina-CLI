@@ -2,13 +2,11 @@ package internal
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
 // for NFL, NBA, Champions League and Europa League response parse
 type Score struct {
-	URL          string
 	HomeTeam     string
 	AwayTeam     string
 	HomeScore    string
@@ -85,8 +83,8 @@ type Clock struct {
 	Minute string `json:"displayValue"`
 }
 
-func (s *Score) FetchResults(sportsType string) ([]*Score, error) {
-	resp, err := http.Get(s.URL + sportsType)
+func (s *Score) FetchResults(endpoint string) ([]*Score, error) {
+	resp, err := http.Get(endpoint)
 	if err != nil { // always check errors before closing the door to avoid panic results
 		return nil, err
 	}
@@ -126,10 +124,7 @@ func (s *Score) FetchResults(sportsType string) ([]*Score, error) {
 			}
 		}
 
-		highlights, err := generateHighlights(comp.Details, homeTeam, awayTeam)
-		if err != nil {
-			fmt.Println("Error: ", err)
-		}
+		highlights := generateHighlights(comp.Details, homeTeam, awayTeam)
 		currentScore.Details = highlights
 		cleanScores = append(cleanScores, currentScore)
 	}
@@ -137,12 +132,15 @@ func (s *Score) FetchResults(sportsType string) ([]*Score, error) {
 	return cleanScores, nil
 }
 
-func generateHighlights(details []Details, homeTeam Team, awayTeam Team) ([]Highlights, error) {
+func generateHighlights(details []Details, homeTeam Team, awayTeam Team) []Highlights {
 	teamNames := map[string]string{
 		homeTeam.Id: homeTeam.DisplayName,
 		awayTeam.Id: awayTeam.DisplayName,
 	}
 	var highlights []Highlights
+	if len(details) == 0 {
+		return nil
+	}
 	for _, detail := range details {
 		playerName := ""
 		teamName := ""
@@ -160,5 +158,5 @@ func generateHighlights(details []Details, homeTeam Team, awayTeam Team) ([]High
 		highlights = append(highlights, highlight)
 	}
 
-	return highlights, nil
+	return highlights
 }

@@ -14,7 +14,7 @@ var footballCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1), // Ensures the user types a league name
 	Run: func(cmd *cobra.Command, args []string) {
 		league := args[0] // args[0] is the first word after 'football' to decide the slug
-		scoresService := internal.Score{URL: "https://site.api.espn.com/apis/site/v2/sports"}
+		var scoresService internal.Score
 
 		// Map simple names to ESPN slugs
 		mapping := map[string]string{
@@ -30,16 +30,14 @@ var footballCmd = &cobra.Command{
 		if !exists {
 			slug = league // Allow raw slugs too
 		}
+		filters := ""
 		if slug != "uefa.champions" && slug != "uefa.europa" { // to distinct league level date structure (weekend vs non-weekend)
 			today := internal.GetEspnDate(0 + (weeksOffsetFootball * -7))
 			yesterday := internal.GetEspnDate(-1 + (weeksOffsetFootball * -7))
-			results, err := scoresService.FetchResults("/soccer/" + slug + "/scoreboard?dates=" + yesterday + "-" + today)
-			internal.PrintTeamSportsScores(results, err)
-		} else {
-			results, err := scoresService.FetchResults("/soccer/" + slug + "/scoreboard")
-			internal.PrintTeamSportsScores(results, err)
+			filters = "?dates=" + yesterday + "-" + today
 		}
-
+		results, err := scoresService.FetchResults("https://site.api.espn.com/apis/site/v2/sports/soccer/" + slug + "/scoreboard" + filters)
+		internal.PrintTeamSportsScores(results, err)
 	},
 }
 

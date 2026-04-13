@@ -10,9 +10,9 @@ var nflCmd = &cobra.Command{
 	Use:   "nfl", // The word the user types: 'lumina nfl'
 	Short: "Get NFL scores",
 	Run: func(cmd *cobra.Command, args []string) {
-		scoresService := internal.Score{URL: "https://site.api.espn.com/apis/site/v2/sports"}
+		var scoresService internal.Score
 
-		results, err := scoresService.FetchResults("/football/nfl/scoreboard")
+		results, err := scoresService.FetchResults("https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard")
 		internal.PrintTeamSportsScores(results, err)
 	},
 }
