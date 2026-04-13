@@ -4,11 +4,11 @@ build:
 
 # Run all tests
 test:
-	go test -v ./internal/
+	go test -v ./...
 
 # Run tests with coverage report
 cover:
-	go test -cover ./internal/
+	go test -cover ./...
 
 # Remove build artifacts
 clean:
