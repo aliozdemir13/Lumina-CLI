@@ -2,6 +2,7 @@
 
 [![Go Version](https://img.shields.io/github/go-mod/go-version/aliozdemir13/Lumina-CLI)](https://go.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Build Status](https://github.com/aliozdemir13/Lumina-CLI/actions/workflows/go.yml/badge.svg)
 
 **Lumina** is a sophisticated Command Line Interface (CLI) application developed in **Go (Golang)** that provides real-time sports telemetry and scoreboard data. By orchestrating data from the ESPN API, Lumina delivers a high-fidelity terminal experience for sports enthusiasts and engineers alike.
 
@@ -28,10 +29,29 @@ Lumina focuses on **Consuming API Services**, **Complex Data Normalization**, **
 Lumina supports subcommands and flags for deep data exploration.
 
 ### Basketball & NFL
-```bash
-./lumina nba
+``` bash
+./lumina nba              # Default: View scores for Yesterday and Today
+./lumina nba -d 5         # View a 5-day range ending today
+./lumina nba -s 3 -d 2    # View a 2-day window in the future (3 to 5 days from now)
+./lumina nba -s -4 -d 2   # View a 2-day window in the past (4 to 6 days ago)
 ./lumina nfl
 ```
+./lumina nba -d 2
+- start is 0 (Today).
+- end = Today.
+- start = Today - 2 days.
+- Result: You see everything from 2 days ago until right now.
+
+./lumina nba -d 2 -s 4
+- start is 4 (4 days in the future).
+- end = Today + 4 days.
+- start = (Today + 4) - 2 = Today + 2 days.
+- Result: You see the schedule for 2 days from now through 4 days from now.
+
+./lumina nba -d 2 -s -4
+- start is -4 (4 days ago).
+- start = (Today - 4) - 2 = Today - 6 days.
+- Result: You see the scores from 6 days ago until 4 days ago.
 
 ### Soccer (Football)
 
@@ -91,3 +111,7 @@ make run
 ```
 
 Disclaimer: This project is for educational purposes only. Lumina is not affiliated with, endorsed by, or representative of ESPN. All sports data is sourced from public API endpoints for personal use.
+
+# Contribution
+- Every PR requires at least 90% code coverage for entire code base.
+- Linter rules can be found inside .golangci.yaml
