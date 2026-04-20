@@ -9,8 +9,8 @@ import (
 // --- generateHighlights tests (pure function, no network) ---
 
 func TestGenerateHighlights(t *testing.T) {
-	home := Team{Id: "1", DisplayName: "Arsenal"}
-	away := Team{Id: "2", DisplayName: "Chelsea"}
+	home := Team{ID: "1", DisplayName: "Arsenal"}
+	away := Team{ID: "2", DisplayName: "Chelsea"}
 
 	t.Run("single goal event", func(t *testing.T) {
 		details := []Details{

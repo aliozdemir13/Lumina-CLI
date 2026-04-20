@@ -22,7 +22,7 @@ const (
 	ColorRed = "\033[38;2;210;15;57m"
 	// ColorLavender renders lavender color
 	ColorLavender = "\033[38;2;114;135;253m"
-	// CBgIndigoLight slightly lighter indigo for the accent
+	// BgIndigoLight slightly lighter indigo for the accent
 	BgIndigoLight = "\033[48;5;105m"
 	// TextIndigo bright "glowing" indigo
 	TextIndigo = "\033[38;5;141m"

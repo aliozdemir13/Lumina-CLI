@@ -59,7 +59,7 @@ type Competitor struct {
 
 // Team struct provides the details of the each team
 type Team struct {
-	Id           string `json:"id"`
+	ID           string `json:"id"`
 	DisplayName  string `json:"displayName"`
 	Abbreviation string `json:"abbreviation"`
 }
@@ -153,8 +153,8 @@ func (s *Score) FetchResults(endpoint string) ([]*Score, error) {
 
 func generateHighlights(details []Details, homeTeam Team, awayTeam Team) []Highlights {
 	teamNames := map[string]string{
-		homeTeam.Id: homeTeam.DisplayName,
-		awayTeam.Id: awayTeam.DisplayName,
+		homeTeam.ID: homeTeam.DisplayName,
+		awayTeam.ID: awayTeam.DisplayName,
 	}
 	var highlights []Highlights
 	if len(details) == 0 {
@@ -165,7 +165,7 @@ func generateHighlights(details []Details, homeTeam Team, awayTeam Team) []Highl
 		teamName := ""
 		if len(detail.AthleteName) > 0 {
 			playerName = detail.AthleteName[0].DisplayName
-			teamName = teamNames[detail.AthleteName[0].Team.Id]
+			teamName = teamNames[detail.AthleteName[0].Team.ID]
 		}
 		highlight := Highlights{
 			Text:   detail.Type.Text,

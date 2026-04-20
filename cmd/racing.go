@@ -17,7 +17,7 @@ var racingCmd = &cobra.Command{
 	Use:   "racing [motorsportName]",
 	Short: "Get racing results for the selected motorsport",
 	Args:  cobra.MinimumNArgs(1), // Ensures the user types a motorsport name
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, args []string) {
 		league := args[0] // args[0] is the first word after 'racing'
 		var racingService internal.Results
 

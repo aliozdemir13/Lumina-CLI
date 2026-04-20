@@ -13,7 +13,7 @@ var rootCmd = &cobra.Command{
 	Use:   "lumina",
 	Short: "Lumina is a CLI for live sports scores",
 	Long:  `A high-performance CLI tool to track NBA, F1, and Soccer scores directly in your terminal.`,
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		// If the user didn't type a subcommand (like 'nba'),
 		// interactive logic to be added.
 		// RunInteractiveMenu()
