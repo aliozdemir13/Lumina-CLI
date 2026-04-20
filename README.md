@@ -4,9 +4,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Go CI](https://github.com/aliozdemir13/Lumina-CLI/actions/workflows/ci.yaml/badge.svg)](https://github.com/aliozdemir13/Lumina-CLI/actions)
 
+
 **Lumina** is a sophisticated Command Line Interface (CLI) application developed in **Go (Golang)** that provides real-time sports telemetry and scoreboard data. By orchestrating data from the ESPN API, Lumina delivers a high-fidelity terminal experience for sports enthusiasts and engineers alike.
 
 Originally built as a simple interactive tool, **Lumina v2** has been architected using the **Cobra CLI framework** to support a scalable, command-based interface.
+
+**Download the latest binary for your OS from the [Releases Page](https://github.com/aliozdemir13/Lumina-CLI/releases).**
 
 ---
 
