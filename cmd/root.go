@@ -8,11 +8,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Version is set by ldflags at build time via GoReleaser
+var Version = "dev"
+
 // This is the base command when running 'lumina'
 var rootCmd = &cobra.Command{
-	Use:   "lumina",
-	Short: "Lumina is a CLI for live sports scores",
-	Long:  `A high-performance CLI tool to track NBA, F1, and Soccer scores directly in your terminal.`,
+	Use:     "lumina",
+	Version: Version,
+	Short:   "Lumina is a CLI for live sports scores",
+	Long:    `A high-performance CLI tool to track NBA, F1, and Soccer scores directly in your terminal.`,
 	Run: func(_ *cobra.Command, _ []string) {
 		// If the user didn't type a subcommand (like 'nba'),
 		// interactive logic to be added.
