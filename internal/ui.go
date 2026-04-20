@@ -1,3 +1,4 @@
+// Package internal is managing the API logic, this class handles ui
 package internal
 
 import (
@@ -10,6 +11,7 @@ import (
 	"github.com/jedib0t/go-pretty/table"
 )
 
+// GetEspnDate formats the date value to API expected format
 func GetEspnDate(offsetDays int) string {
 	// Get current time and add the offset
 	t := time.Now().AddDate(0, 0, offsetDays)
@@ -19,6 +21,7 @@ func GetEspnDate(offsetDays int) string {
 	return t.Format("20060102")
 }
 
+// PrintTeamSportsScores parses response for team sports and prints
 func PrintTeamSportsScores(scores []*Score, err error) {
 	if err != nil {
 		fmt.Println(Dim("!!"), "Error:", err)
@@ -93,6 +96,7 @@ func PrintTeamSportsScores(scores []*Score, err error) {
 	}
 }
 
+// PrintRacingTable parses the race results and prints
 func PrintRacingTable(scores []Results, err error) {
 	// Initialize Table
 	t := table.NewWriter()
@@ -139,6 +143,7 @@ func PrintRacingTable(scores []Results, err error) {
 	t.Render()
 }
 
+// PrintHeader prints the logo of the app
 func PrintHeader() {
 	fmt.Print("\033[H\033[2J") // Clear screen
 

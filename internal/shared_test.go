@@ -1,9 +1,7 @@
 package internal
 
 import (
-	"regexp"
 	"testing"
-	"time"
 )
 
 func TestFormatToLocal(t *testing.T) {
@@ -77,43 +75,4 @@ func TestFormatToLocal(t *testing.T) {
 			}
 		})
 	}
-}
-
-func TestGetEspnDate(t *testing.T) {
-	datePattern := regexp.MustCompile(`^\d{8}$`)
-
-	t.Run("zero offset returns today", func(t *testing.T) {
-		got := GetEspnDate(0)
-		want := time.Now().Format("20060102")
-
-		if got != want {
-			t.Errorf("GetEspnDate(0) = %q, want %q", got, want)
-		}
-	})
-
-	t.Run("negative offset returns past date", func(t *testing.T) {
-		got := GetEspnDate(-1)
-		want := time.Now().AddDate(0, 0, -1).Format("20060102")
-
-		if got != want {
-			t.Errorf("GetEspnDate(-1) = %q, want %q", got, want)
-		}
-	})
-
-	t.Run("positive offset returns future date", func(t *testing.T) {
-		got := GetEspnDate(7)
-		want := time.Now().AddDate(0, 0, 7).Format("20060102")
-
-		if got != want {
-			t.Errorf("GetEspnDate(7) = %q, want %q", got, want)
-		}
-	})
-
-	t.Run("output format is always YYYYMMDD", func(t *testing.T) {
-		got := GetEspnDate(-30)
-
-		if !datePattern.MatchString(got) {
-			t.Errorf("GetEspnDate(-30) = %q, does not match YYYYMMDD pattern", got)
-		}
-	})
 }

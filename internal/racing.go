@@ -1,3 +1,4 @@
+// Package internal is managing the API logic, this class handles racing results
 package internal
 
 import (
@@ -8,7 +9,7 @@ import (
 	"time"
 )
 
-// for races
+// Results parses the races results to display in UI
 type Results struct {
 	Podium          string // sample: LEC - HAM - VER
 	Location        string // sample: Qatar Airways Australian GP
@@ -17,15 +18,18 @@ type Results struct {
 	SessionComplete bool
 }
 
+// RacingResponse in use for the API response parsing
 type RacingResponse struct {
 	Events []RacingEvent `json:"events"`
 }
 
+// RacingEvent parses the individual race weeks
 type RacingEvent struct {
 	ShortName    string              `json:"shortName"` // "Australian GP"
 	Competitions []RacingCompetition `json:"competitions"`
 }
 
+// RacingCompetition provides details about the races
 type RacingCompetition struct {
 	Date        string             `json:"date"`
 	Status      Status             `json:"status"`
@@ -33,10 +37,12 @@ type RacingCompetition struct {
 	Competitors []RacingCompetitor `json:"competitors"`
 }
 
+// SessionType parses type of session
 type SessionType struct {
 	Abbreviation string `json:"abbreviation"` // "RACE", "PROV", "FP1"
 }
 
+// RacingCompetitor parses the racers
 type RacingCompetitor struct {
 	Order   int `json:"order"`
 	Athlete struct {
@@ -44,6 +50,7 @@ type RacingCompetitor struct {
 	} `json:"athlete"`
 }
 
+// FetchResults pulls the API response for motorsports
 func (s *Results) FetchResults(endpoint string) ([]Results, error) {
 	client := &http.Client{
 		Timeout: 10 * time.Second,
@@ -52,7 +59,9 @@ func (s *Results) FetchResults(endpoint string) ([]Results, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	var wrapper RacingResponse
 	if err := json.NewDecoder(resp.Body).Decode(&wrapper); err != nil {

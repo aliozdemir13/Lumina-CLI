@@ -1,3 +1,4 @@
+// Package cmd handles the command line interaction, this class handles racing commands
 package cmd
 
 import (

@@ -1,3 +1,4 @@
+// Package cmd handles the command line interaction, this class is the root
 package cmd
 
 import (

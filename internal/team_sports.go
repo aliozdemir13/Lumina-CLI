@@ -1,3 +1,4 @@
+// Package internal is managing the API logic, this class handles team sport logic
 package internal
 
 import (
@@ -6,7 +7,7 @@ import (
 	"time"
 )
 
-// for NFL, NBA, Champions League and Europa League response parse
+// Score for NFL, NBA, Champions League and Europa League response parse
 type Score struct {
 	HomeTeam     string
 	AwayTeam     string
@@ -20,6 +21,7 @@ type Score struct {
 	Status       string
 }
 
+// Highlights struct is helper for Score to display match higlights
 type Highlights struct {
 	Text   string
 	Player string
@@ -27,10 +29,12 @@ type Highlights struct {
 	Minute string
 }
 
+// ESPNResponse in use for parsing API response for team sports
 type ESPNResponse struct {
 	Events []Event `json:"events"`
 }
 
+// Event parses the match details
 type Event struct {
 	ID           string        `json:"id"`
 	Date         string        `json:"date"`
@@ -39,11 +43,13 @@ type Event struct {
 	Status       Status        `json:"status"`
 }
 
+// Competition provides details of the match and competitors
 type Competition struct {
 	Competitors []Competitor `json:"competitors"`
 	Details     []Details    `json:"details"`
 }
 
+// Competitor represent teams playing, score and status
 type Competitor struct {
 	HomeAway string `json:"homeAway"`
 	Score    string `json:"score"`
@@ -51,39 +57,46 @@ type Competitor struct {
 	Winner   bool   `json:"winner"`
 }
 
+// Team struct provides the details of the each team
 type Team struct {
 	Id           string `json:"id"`
 	DisplayName  string `json:"displayName"`
 	Abbreviation string `json:"abbreviation"`
 }
 
+// Status struct is a for game status and time
 type Status struct {
 	Type         Type   `json:"type"`
 	DisplayClock string `json:"displayClock"`
 	Period       int    `json:"period"`
 }
 
+// Type struct parses the game status
 type Type struct {
 	Completed   bool   `json:"completed"`
 	Text        string `json:"text"`
 	Description string `json:"description"`
 }
 
+// Details struct parses the higlight of the game
 type Details struct {
 	Type        Type               `json:"type"`
 	AthleteName []AthletesInvolved `json:"athletesInvolved"`
 	Clock       Clock              `json:"clock"`
 }
 
+// AthletesInvolved diplays the actor of the highlight
 type AthletesInvolved struct {
 	DisplayName string `json:"displayName"`
 	Team        Team   `json:"team"`
 }
 
+// Clock struct parses the time of the event
 type Clock struct {
 	Minute string `json:"displayValue"`
 }
 
+// FetchResults pulls the API result for the team sport events
 func (s *Score) FetchResults(endpoint string) ([]*Score, error) {
 	client := &http.Client{
 		Timeout: 10 * time.Second,
@@ -92,7 +105,9 @@ func (s *Score) FetchResults(endpoint string) ([]*Score, error) {
 	if err != nil { // always check errors before closing the door to avoid panic results
 		return nil, err
 	}
-	defer resp.Body.Close() // ALWAYS close the "door" when you're done
+	defer func() {
+		_ = resp.Body.Close()
+	}() // ALWAYS close the "door" when you're done
 
 	var wrapper ESPNResponse
 	if err := json.NewDecoder(resp.Body).Decode(&wrapper); err != nil {
