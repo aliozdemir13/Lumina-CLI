@@ -1,3 +1,4 @@
+// Package cmd handles the command line interaction, this class handles nfl commands
 package cmd
 
 import (
@@ -9,7 +10,7 @@ import (
 var nflCmd = &cobra.Command{
 	Use:   "nfl", // The word the user types: 'lumina nfl'
 	Short: "Get NFL scores",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		var scoresService internal.Score
 
 		results, err := scoresService.FetchResults("https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard")

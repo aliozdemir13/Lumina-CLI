@@ -1,9 +1,11 @@
+// Package internal is managing the API logic, this class handles shared utils
 package internal
 
 import (
 	"time"
 )
 
+// FormatToLocal parses iso string to local version
 func FormatToLocal(isoString string) (string, error) {
 	const layout = "2006-01-02T15:04Z"
 
