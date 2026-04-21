@@ -50,3 +50,17 @@ jobs:
             echo "Error: Coverage is $COVERAGE%, which is below the $THRESHOLD% threshold."
             exit 1
           fi
+          
+  vuln_check:
+    name: Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+      - name: Run govulncheck
+        # Using the official action is faster and gives better UI reports
+        uses: golang/govulncheck-action@v1
+        with:
+          go-version-input: '1.25'
