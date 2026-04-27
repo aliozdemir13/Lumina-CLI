@@ -54,3 +54,33 @@ func TestExecute_ExitPath(t *testing.T) {
 		t.Fatalf("Process ran with err %v, want exit status 1. Coverage for os.Exit(1) depends on this.", err)
 	}
 }
+
+func TestCommands(t *testing.T) {
+	// football
+	rootCmd.SetArgs([]string{"football", "tur"})
+	err := rootCmd.Execute()
+	if err != nil {
+		t.Errorf("Command failed: %v", err)
+	}
+
+	// nba
+	rootCmd.SetArgs([]string{"nba"})
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Errorf("Command failed: %v", err)
+	}
+
+	// nfl
+	rootCmd.SetArgs([]string{"nfl"})
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Errorf("Command failed: %v", err)
+	}
+
+	// racing
+	rootCmd.SetArgs([]string{"racing", "f1"})
+	err = rootCmd.Execute()
+	if err != nil {
+		t.Errorf("Command failed: %v", err)
+	}
+}
